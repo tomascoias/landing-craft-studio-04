@@ -1,442 +1,220 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Reveal } from "@/components/landing/Reveal";
-import {
-  ArrowRight,
-  AudioLines,
-  Bookmark,
-  Briefcase,
-  Download,
-  Globe2,
-  Headphones,
-  ListMusic,
-  Play,
-  Plane,
-  Sparkles,
-  Zap,
+  ChevronLeft,
+  ChevronRight,
+  CircleArrowDown,
+  Globe,
+  Home,
+  Library,
+  Menu,
+  Plus,
+  Search,
+  X,
 } from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import album1 from "@/assets/album-1.jpg";
+import album2 from "@/assets/album-2.jpg";
+import album3 from "@/assets/album-3.jpg";
+import album4 from "@/assets/album-4.jpg";
+import album5 from "@/assets/album-5.jpg";
+import album6 from "@/assets/album-6.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Airwave — Your music, one browser tab away" },
+      { title: "Spotify — Web Player: música para todos" },
       {
         name: "description",
-        content:
-          "Airwave is the zero-install music player that runs in your browser. Millions of songs, podcasts and audiobooks, free to start — no download, no waiting.",
+        content: "Ouve música, artistas e podcasts populares no Spotify Web Player.",
       },
-      { property: "og:title", content: "Airwave — Your music, one browser tab away" },
+      { property: "og:title", content: "Spotify — Web Player: música para todos" },
       {
         property: "og:description",
-        content:
-          "Press play in seconds. Millions of songs, podcasts and audiobooks streaming straight from your browser. Free to start.",
+        content: "Ouve música, artistas e podcasts populares no Spotify Web Player.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: Landing,
+  component: SpotifyHome,
 });
 
-const personas = [
-  {
-    icon: Briefcase,
-    role: "The locked-down desk worker",
-    frustration: "Can't install apps on a managed work laptop, so music stops at the office door.",
-    outcome: "Opens a tab and has a focus mix running before the first meeting starts.",
-  },
-  {
-    icon: Plane,
-    role: "The always-borrowing traveller",
-    frustration: "Hotel PCs, family laptops, airport kiosks — signing in means installing all over again.",
-    outcome: "Logs in anywhere and finds the same library, queue and place in the episode.",
-  },
-  {
-    icon: Headphones,
-    role: "The playlist perfectionist",
-    frustration: "Bouncing between a clunky desktop app and a phone just to audition one track.",
-    outcome: "Builds, reorders and shares a full set in one window, then sends a single link.",
-  },
+const tracks = [
+  { image: album1, title: "Puxa o Lança", artist: "MC Jvila, KayBlack, Veigh, Vulgo FK", explicit: true },
+  { image: album2, title: "BbY WOW", artist: "KAROL G, Judeline, rusowsky" },
+  { image: album3, title: "Nicole Kidman", artist: "ADÉLA", explicit: true },
+  { image: album4, title: "Alcatraz", artist: "Plutonio" },
+  { image: album5, title: "Escola é linda", artist: "VM e XOODÓ", explicit: true },
+  { image: album6, title: "Nos vai ficar, sem se sufocar", artist: "Mc Lele JP, DJ Andrabbeat", explicit: true },
 ];
 
-const features = [
-  {
-    icon: Zap,
-    name: "Instant play",
-    benefit: "Sound in under three seconds — nothing to download, update or restart.",
-  },
-  {
-    icon: Globe2,
-    name: "Any device, any browser",
-    benefit: "Your library follows you onto every screen you happen to be sitting at.",
-  },
-  {
-    icon: Sparkles,
-    name: "Mixes that learn you",
-    benefit: "A fresh set that already sounds like your taste, without you building it.",
-  },
-  {
-    icon: ListMusic,
-    name: "One shelf for everything",
-    benefit: "Songs, podcasts and audiobooks resume exactly where you stopped.",
-  },
-  {
-    icon: Download,
-    name: "Save for the dead zones",
-    benefit: "Keep albums on hand so the tunnel, the flight and the basement stay loud.",
-  },
+const artists = [
+  { image: album1, name: "Plutonio", position: "object-center" },
+  { image: album5, name: "Buba Espinho", position: "object-top" },
+  { image: album3, name: "Bárbara Bandeira", position: "object-center" },
+  { image: album2, name: "The Weeknd", position: "object-top" },
+  { image: album4, name: "Slow J", position: "object-center" },
+  { image: album6, name: "Dillaz", position: "object-center" },
 ];
 
-const faqs = [
-  {
-    q: "Do I need to install anything?",
-    a: "No. Airwave runs entirely in your browser. Open the page, sign in and press play — there is nothing to download and nothing to keep updated.",
-  },
-  {
-    q: "Is it really free to start?",
-    a: "Yes. You can create an account and start listening for free with occasional ads. A paid plan removes ads and adds lossless audio and offline saves.",
-  },
-  {
-    q: "Which browsers work?",
-    a: "The current and previous versions of Chrome, Safari, Firefox and Edge, on both desktop and mobile.",
-  },
-  {
-    q: "Can I sign in with Google or Apple?",
-    a: "You can. One tap with Google or Apple creates your account with no password to invent or remember.",
-  },
-  {
-    q: "What if I forget my password?",
-    a: "Use the reset link on the sign-in screen and you'll get an email to set a new one in under a minute.",
-  },
-  {
-    q: "How good does it sound?",
-    a: "High-quality streaming by default, with a lossless setting on paid plans where the recording allows it.",
-  },
-  {
-    q: "Will it work on a slow connection?",
-    a: "Airwave measures your connection and buffers ahead, dropping quality briefly rather than stopping the music.",
-  },
-  {
-    q: "Can I listen offline?",
-    a: "On a paid plan you can save albums and playlists to the browser on that device and play them with no connection.",
-  },
-  {
-    q: "Do my playlists move between devices?",
-    a: "Everything — saved tracks, playlists, queue and playback position — lives with your account, not the device.",
-  },
-  {
-    q: "Can I use it on a work computer?",
-    a: "That's what it's built for. Because there's no software to install, locked-down machines are no obstacle.",
-  },
-  {
-    q: "Is my listening data private?",
-    a: "Your history is yours. You choose what gets shared to your public profile, and we never sell personal data.",
-  },
-  {
-    q: "How do I cancel a paid plan?",
-    a: "One click in account settings. You keep access until the end of the period you already paid for.",
-  },
-];
-
-function Landing() {
+function BrandMark() {
   return (
-    <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
-          <a href="#top" className="flex items-center gap-2.5">
-            <span className="grid size-9 place-items-center rounded-xl bg-primary/15 text-primary">
-              <AudioLines className="size-5" />
-            </span>
-            <span className="font-display text-lg font-semibold tracking-tight">Airwave</span>
-          </a>
-          <nav className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
-            <a href="#audience" className="transition-colors hover:text-foreground">
-              Who it's for
-            </a>
-            <a href="#features" className="transition-colors hover:text-foreground">
-              Features
-            </a>
-            <a href="#faq" className="transition-colors hover:text-foreground">
-              FAQ
-            </a>
-          </nav>
-          <div className="flex items-center gap-2">
-            <a
-              href="#start"
-              className="rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Log in
-            </a>
-            <a
-              href="#start"
-              className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03] active:scale-100"
-            >
-              Sign up free
-            </a>
-          </div>
-        </div>
-      </header>
+    <a href="#inicio" aria-label="Spotify" className="flex shrink-0 items-center gap-2 text-foreground">
+      <span className="grid size-10 place-items-center rounded-full bg-foreground text-background">
+        <span className="spotify-waves" aria-hidden="true"><i /><i /><i /></span>
+      </span>
+      <span className="hidden text-xl font-bold xl:inline">Spotify</span>
+    </a>
+  );
+}
 
-      {/* HERO */}
-      <section id="top" className="ambient-bloom overflow-hidden">
-        <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 sm:px-8 lg:grid-cols-12 lg:py-24">
-          <Reveal className="lg:col-span-7">
-            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium text-muted-foreground">
-              <span className="size-1.5 rounded-full bg-primary" />
-              No download. No install. Just a tab.
-            </span>
-            <h1 className="mt-6 max-w-[19ch] text-balance font-display text-5xl font-bold leading-[1.02] sm:text-6xl">
-              Your music shouldn't need an <span className="text-gradient-signal">install</span>.
-            </h1>
-            <p className="mt-6 max-w-[46ch] text-pretty text-lg leading-relaxed text-muted-foreground">
-              Millions of songs, podcasts and audiobooks that play the moment you open a tab — on any
-              computer you happen to be sitting at.
-            </p>
-            <div id="start" className="mt-9 flex flex-wrap items-center gap-3">
-              <a
-                href="#start"
-                className="rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03] active:scale-100"
-              >
-                Start listening free
-              </a>
-              <a
-                href="#features"
-                className="group flex items-center gap-2 rounded-full border border-border bg-surface px-6 py-3.5 text-sm font-semibold text-foreground transition-colors hover:border-primary/40"
-              >
-                See how it works
-                <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-              </a>
-            </div>
-            <p className="mt-6 text-sm text-muted-foreground">
-              Free forever tier · No card required · Sign in with Google or Apple
-            </p>
-          </Reveal>
+function SpotifyHome() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [query, setQuery] = useState("");
 
-          <Reveal delay={120} className="lg:col-span-5">
-            <div className="surface-panel glow-ring rounded-3xl p-6">
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
-                    Now playing
-                  </p>
-                  <p className="mt-1.5 font-display text-xl font-semibold">Late Signal</p>
-                  <p className="text-sm text-muted-foreground">Kaya Mora · Night Rooms</p>
-                </div>
-                <span className="grid size-11 place-items-center rounded-xl bg-accent/15 text-accent">
-                  <Bookmark className="size-5" />
-                </span>
-              </div>
+  const filteredTracks = tracks.filter((track) =>
+    `${track.title} ${track.artist}`.toLocaleLowerCase("pt").includes(query.toLocaleLowerCase("pt")),
+  );
 
-              <div className="my-6 flex h-14 items-end gap-1">
-                {[42, 78, 55, 94, 63, 45, 82, 50, 88, 60, 36, 72, 52, 90, 47, 68, 40, 84, 58, 74].map(
-                  (h, i) => (
-                    <span
-                      key={i}
-                      className={`eq-bar w-full rounded-full ${i % 5 === 4 ? "bg-accent/80" : "bg-primary/70"}`}
-                      style={{ height: `${h}%`, animationDelay: `${i * 70}ms` }}
-                    />
-                  ),
-                )}
-              </div>
+  return (
+    <div id="inicio" className="h-dvh min-h-[600px] overflow-hidden bg-background text-foreground">
+      <header className="flex h-16 items-center gap-3 px-3 sm:px-5">
+        <BrandMark />
 
-              <div className="flex items-center gap-4">
-                <button
-                  type="button"
-                  aria-label="Play"
-                  className="grid size-14 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground transition-transform hover:scale-105"
-                >
-                  <Play className="size-6 fill-current" />
-                </button>
-                <div className="flex-1">
-                  <div className="flex justify-between text-xs text-muted-foreground">
-                    <span>1:24</span>
-                    <span>3:48</span>
-                  </div>
-                  <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-muted">
-                    <div className="h-full w-1/3 rounded-full bg-primary" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-6 grid grid-cols-3 gap-3 border-t border-border pt-5 text-center">
-                <div>
-                  <p className="font-display text-xl font-bold text-primary">100M+</p>
-                  <p className="mt-1 text-xs text-muted-foreground">Tracks</p>
-                </div>
-                <div>
-                  <p className="font-display text-xl font-bold">0</p>
-                  <p className="mt-1 text-xs text-muted-foreground">Downloads</p>
-                </div>
-                <div>
-                  <p className="font-display text-xl font-bold text-accent">3s</p>
-                  <p className="mt-1 text-xs text-muted-foreground">To first note</p>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* AUDIENCE */}
-      <section id="audience" className="mx-auto max-w-6xl px-5 py-16 sm:px-8 lg:py-24">
-        <Reveal className="max-w-[42ch]">
-          <p className="text-sm font-semibold text-primary">Who it's for</p>
-          <h2 className="mt-3 text-balance font-display text-3xl font-bold sm:text-4xl">
-            Built for people who can't install anything.
-          </h2>
-        </Reveal>
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
-          {personas.map((p, i) => (
-            <Reveal
-              key={p.role}
-              delay={i * 90}
-              as="article"
-              className="surface-panel rounded-2xl p-6"
-            >
-              <span className="grid size-11 place-items-center rounded-xl bg-primary/12 text-primary">
-                <p.icon className="size-5" />
-              </span>
-              <h3 className="mt-5 font-display text-lg font-semibold">{p.role}</h3>
-              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                <span className="font-medium text-foreground/80">Frustration: </span>
-                {p.frustration}
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                <span className="font-medium text-foreground/80">What they get: </span>
-                {p.outcome}
-              </p>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* FEATURES */}
-      <section id="features" className="mx-auto max-w-6xl px-5 py-16 sm:px-8 lg:py-24">
-        <Reveal className="max-w-[42ch]">
-          <p className="text-sm font-semibold text-primary">What you get</p>
-          <h2 className="mt-3 text-balance font-display text-3xl font-bold sm:text-4xl">
-            Everything the app did. None of the waiting.
-          </h2>
-        </Reveal>
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {features.map((f, i) => (
-            <Reveal
-              key={f.name}
-              delay={i * 70}
-              as="article"
-              className={`surface-panel flex flex-col rounded-2xl p-6 ${i === 4 ? "sm:col-span-2 lg:col-span-1" : ""}`}
-            >
-              <span className="grid size-10 place-items-center rounded-lg bg-accent/12 text-accent">
-                <f.icon className="size-5" />
-              </span>
-              <h3 className="mt-4 font-display text-lg font-semibold">{f.name}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.benefit}</p>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* CTA BAND */}
-      <section className="mx-auto max-w-6xl px-5 sm:px-8">
-        <Reveal className="surface-panel relative overflow-hidden rounded-3xl px-6 py-14 sm:px-12">
-          <div className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-primary/20 blur-[90px]" />
-          <div className="relative flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
-            <div>
-              <h2 className="max-w-[22ch] text-balance font-display text-3xl font-bold sm:text-4xl">
-                Press play in the next thirty seconds.
-              </h2>
-              <p className="mt-3 max-w-[44ch] text-pretty text-muted-foreground">
-                Free to start, no card, no install. Open the tab and the music is already there.
-              </p>
-            </div>
-            <div className="flex shrink-0 flex-wrap gap-3">
-              <a
-                href="#start"
-                className="rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03] active:scale-100"
-              >
-                Start listening free
-              </a>
-              <a
-                href="#faq"
-                className="rounded-full border border-border px-6 py-3.5 text-sm font-semibold text-foreground transition-colors hover:border-primary/40"
-              >
-                Learn more
-              </a>
-            </div>
-          </div>
-        </Reveal>
-      </section>
-
-      {/* FAQ */}
-      <section id="faq" className="mx-auto max-w-3xl px-5 py-20 sm:px-8">
-        <Reveal>
-          <p className="text-sm font-semibold text-primary">FAQ</p>
-          <h2 className="mt-3 text-balance font-display text-3xl font-bold sm:text-4xl">
-            Questions, answered.
-          </h2>
-        </Reveal>
-        <Reveal delay={90} className="mt-8">
-          <Accordion type="single" collapsible className="w-full">
-            {faqs.map((item, i) => (
-              <AccordionItem key={item.q} value={`item-${i}`} className="border-border">
-                <AccordionTrigger className="text-left font-display text-base font-semibold hover:no-underline">
-                  {item.q}
-                </AccordionTrigger>
-                <AccordionContent className="text-sm leading-relaxed text-muted-foreground">
-                  {item.a}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </Reveal>
-      </section>
-
-      <footer className="border-t border-border bg-surface/40">
-        <div className="mx-auto flex max-w-6xl flex-col gap-8 px-5 py-12 sm:px-8 md:flex-row md:items-start md:justify-between">
-          <div className="max-w-[34ch]">
-            <div className="flex items-center gap-2.5">
-              <span className="grid size-9 place-items-center rounded-xl bg-primary/15 text-primary">
-                <AudioLines className="size-5" />
-              </span>
-              <span className="font-display text-lg font-semibold">Airwave</span>
-            </div>
-            <p className="mt-3 text-sm text-muted-foreground">
-              The browser music player that starts playing before you finish sitting down.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
-            <a href="#faq" className="transition-colors hover:text-foreground">
-              Privacy
-            </a>
-            <a href="#faq" className="transition-colors hover:text-foreground">
-              Terms
-            </a>
-            <a href="#faq" className="transition-colors hover:text-foreground">
-              Cookies
-            </a>
-            <a href="#faq" className="transition-colors hover:text-foreground">
-              Support
-            </a>
-          </div>
-          <label className="text-sm text-muted-foreground">
-            <span className="mb-2 block">Region &amp; language</span>
-            <select className="rounded-lg border border-border bg-surface px-3 py-2 text-sm text-foreground outline-none focus:border-primary">
-              <option>English (US)</option>
-              <option>Português (BR)</option>
-              <option>Español</option>
-              <option>Français</option>
-            </select>
+        <div className="mx-auto flex min-w-0 flex-1 items-center justify-center gap-2 xl:max-w-2xl">
+          <Button aria-label="Início" title="Início" variant="secondary" size="icon" className="size-12 shrink-0 rounded-full">
+            <Home className="size-6" />
+          </Button>
+          <label className="group relative w-full max-w-xl">
+            <Search className="absolute left-4 top-1/2 size-6 -translate-y-1/2 text-muted-foreground group-focus-within:text-foreground" />
+            <Input
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="O que queres reproduzir?"
+              aria-label="Pesquisar música e artistas"
+              className="h-12 rounded-full border-transparent bg-secondary pl-12 pr-12 text-base shadow-none hover:bg-surface-raised focus-visible:ring-2"
+            />
+            {query ? (
+              <Button type="button" onClick={() => setQuery("")} aria-label="Limpar pesquisa" variant="ghost" size="icon" className="absolute right-1.5 top-1/2 size-9 -translate-y-1/2 rounded-full">
+                <X />
+              </Button>
+            ) : (
+              <span className="absolute right-4 top-1/2 h-6 w-px -translate-y-1/2 bg-border" />
+            )}
           </label>
         </div>
-        <div className="mx-auto max-w-6xl border-t border-border px-5 py-6 text-xs text-muted-foreground sm:px-8">
-          © 2026 Airwave Audio, Inc. All rights reserved.
-        </div>
-      </footer>
+
+        <nav className="hidden shrink-0 items-center gap-3 text-sm font-bold text-muted-foreground lg:flex">
+          <a href="#premium" className="hover:text-foreground">Premium</a>
+          <a href="#apoio" className="hover:text-foreground">Apoio</a>
+          <a href="#transferir" className="hover:text-foreground">Transferir</a>
+          <span className="mx-2 h-6 w-px bg-border" />
+          <a href="#instalar" className="flex items-center gap-1.5 hover:text-foreground"><CircleArrowDown /> Instalar app</a>
+          <a href="#registo" className="ml-2 hover:text-foreground">Regista-te</a>
+          <Button className="h-12 rounded-full bg-foreground px-7 font-bold text-background hover:bg-foreground/90">Iniciar sessão</Button>
+        </nav>
+
+        <Button onClick={() => setMenuOpen((open) => !open)} aria-label="Abrir menu" variant="ghost" size="icon" className="shrink-0 rounded-full lg:hidden">
+          {menuOpen ? <X /> : <Menu />}
+        </Button>
+      </header>
+
+      {menuOpen && (
+        <nav className="absolute right-3 top-14 z-50 flex w-60 flex-col gap-1 rounded-md border border-border bg-popover p-2 text-sm font-bold shadow-xl lg:hidden">
+          {["Premium", "Apoio", "Transferir", "Instalar app", "Regista-te"].map((item) => <a key={item} href={`#${item.toLowerCase().replace(" ", "-")}`} className="rounded px-3 py-3 hover:bg-secondary">{item}</a>)}
+          <Button className="mt-1 rounded-full bg-foreground text-background hover:bg-foreground/90">Iniciar sessão</Button>
+        </nav>
+      )}
+
+      <div className="grid h-[calc(100dvh-4rem)] grid-cols-1 gap-2 px-2 pb-2 md:grid-cols-[320px_minmax(0,1fr)] lg:grid-cols-[420px_minmax(0,1fr)]">
+        <aside className="hidden min-h-0 flex-col overflow-hidden rounded-md bg-sidebar md:flex">
+          <div className="flex items-center justify-between px-6 py-5">
+            <div className="flex items-center gap-3 font-bold"><Library className="size-5" /> A tua Biblioteca</div>
+            <Button variant="secondary" className="rounded-full font-bold"><Plus /> Criar</Button>
+          </div>
+          <div className="library-scroll mt-6 flex min-h-0 flex-1 flex-col overflow-y-auto px-2">
+            <div className="rounded-md bg-secondary p-5">
+              <h2 className="font-bold">Cria a tua primeira playlist</h2>
+              <p className="mt-2 text-sm font-medium">É fácil, nós ajudamos</p>
+              <Button className="mt-5 rounded-full bg-foreground px-5 font-bold text-background hover:bg-foreground/90">Criar playlist</Button>
+            </div>
+            <div className="mt-6 rounded-md bg-secondary p-5">
+              <h2 className="max-w-[28ch] font-bold">Vamos lá encontrar alguns podcasts para seguires</h2>
+              <p className="mt-2 text-sm font-medium">Vamos atualizar-te sobre os novos episódios</p>
+              <Button className="mt-5 rounded-full bg-foreground px-5 font-bold text-background hover:bg-foreground/90">Explorar podcasts</Button>
+            </div>
+            <div className="mt-auto px-5 pb-6 pt-10">
+              <div className="flex flex-wrap gap-x-5 gap-y-3 text-xs text-muted-foreground">
+                {['Termos Legais','Centro de Segurança e Privacidade','Política de Privacidade','Definições de cookies','Acerca dos anúncios','Acessibilidade'].map((link) => <a href="#legal" key={link} className="hover:underline">{link}</a>)}
+                <a href="#cookies" className="font-semibold text-foreground hover:underline">Cookies</a>
+              </div>
+              <Button variant="outline" className="mt-8 rounded-full bg-transparent font-bold"><Globe /> Português</Button>
+            </div>
+          </div>
+        </aside>
+
+        <main className="content-scroll relative min-w-0 overflow-y-auto rounded-md bg-surface pb-12">
+          <section className="px-5 pb-8 pt-7 sm:px-8 lg:px-12">
+            <div className="flex items-end justify-between gap-4">
+              <h1 className="text-2xl font-bold sm:text-3xl">Músicas populares</h1>
+              <button type="button" className="text-sm font-bold text-muted-foreground hover:underline">Mostrar tudo</button>
+            </div>
+
+            {filteredTracks.length ? (
+              <div className="mt-5 grid grid-cols-2 gap-x-4 gap-y-7 sm:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-6">
+                {filteredTracks.map((track) => (
+                  <article key={track.title} className="group min-w-0 cursor-pointer">
+                    <div className="relative aspect-square overflow-hidden rounded-md bg-secondary shadow-lg">
+                      <img src={track.image} alt={`Capa de ${track.title}`} className="size-full object-cover transition-transform duration-300 group-hover:scale-[1.03]" />
+                      <Button aria-label={`Reproduzir ${track.title}`} size="icon" className="absolute bottom-2 right-2 size-12 translate-y-3 rounded-full bg-primary text-primary-foreground opacity-0 shadow-xl transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                        <span className="ml-0.5 text-lg">▶</span>
+                      </Button>
+                    </div>
+                    <h2 className="mt-3 truncate font-semibold">{track.title}</h2>
+                    <p className="mt-1 line-clamp-2 text-sm leading-5 text-muted-foreground">
+                      {track.explicit && <span className="mr-1.5 rounded-sm bg-muted-foreground px-1 text-[10px] font-bold text-background">E</span>}
+                      {track.artist}
+                    </p>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <div className="grid min-h-52 place-items-center text-center text-muted-foreground">Não encontrámos resultados para “{query}”.</div>
+            )}
+          </section>
+
+          <section className="px-5 py-7 sm:px-8 lg:px-12">
+            <div className="flex items-end justify-between gap-4">
+              <h2 className="text-2xl font-bold sm:text-3xl">Artistas populares</h2>
+              <button type="button" className="text-sm font-bold text-muted-foreground hover:underline">Mostrar tudo</button>
+            </div>
+            <div className="mt-5 grid grid-cols-2 gap-x-4 gap-y-7 sm:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-6">
+              {artists.map((artist) => (
+                <article key={artist.name} className="group min-w-0 cursor-pointer">
+                  <div className="relative aspect-square overflow-hidden rounded-full bg-secondary shadow-lg">
+                    <img src={artist.image} alt={artist.name} className={`size-full object-cover ${artist.position} transition-transform duration-300 group-hover:scale-[1.03]`} />
+                    <Button aria-label={`Reproduzir ${artist.name}`} size="icon" className="absolute bottom-3 right-3 size-12 translate-y-3 rounded-full bg-primary text-primary-foreground opacity-0 shadow-xl transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                      <span className="ml-0.5 text-lg">▶</span>
+                    </Button>
+                  </div>
+                  <h3 className="mt-3 truncate font-semibold">{artist.name}</h3>
+                  <p className="mt-1 text-sm text-muted-foreground">Artista</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <footer className="mx-5 mt-10 flex flex-col justify-between gap-8 border-t border-border px-2 py-8 text-sm text-muted-foreground sm:mx-8 sm:flex-row lg:mx-12">
+            <span>© 2026 Spotify AB</span>
+            <div className="flex flex-wrap gap-5"><a href="#legal" className="hover:text-foreground">Legal</a><a href="#privacidade" className="hover:text-foreground">Privacidade</a><a href="#cookies" className="hover:text-foreground">Cookies</a></div>
+          </footer>
+
+          <button type="button" aria-label="Ver mais" className="absolute right-3 top-1/2 hidden size-10 -translate-y-1/2 place-items-center rounded-full bg-background/80 text-muted-foreground shadow-xl hover:text-foreground xl:grid"><ChevronRight /></button>
+          <button type="button" aria-label="Voltar" className="absolute left-3 top-1/2 hidden size-10 -translate-y-1/2 place-items-center rounded-full bg-background/80 text-muted-foreground shadow-xl hover:text-foreground xl:grid"><ChevronLeft /></button>
+        </main>
+      </div>
     </div>
   );
 }

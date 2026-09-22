@@ -77,18 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Airwave — Music that plays in your browser" },
+      { title: "Spotify — Web Player: música para todos" },
       {
         name: "description",
         content:
-          "Airwave streams millions of songs, podcasts and audiobooks straight from your browser. No install, free to start.",
+          "Ouve música, artistas e podcasts populares no Spotify Web Player.",
       },
-      { name: "author", content: "Airwave" },
-      { property: "og:title", content: "Airwave — Music that plays in your browser" },
+      { name: "author", content: "Spotify" },
+      { property: "og:title", content: "Spotify — Web Player: música para todos" },
       {
         property: "og:description",
         content:
-          "No install, no waiting. Press play in seconds on any computer you're sitting at.",
+          "Ouve música, artistas e podcasts populares no Spotify Web Player.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -99,7 +99,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap",
       },
       {
         rel: "stylesheet",
