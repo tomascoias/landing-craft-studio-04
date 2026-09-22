@@ -14,6 +14,7 @@ import {
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import CalBookingModal from "@/components/CalBookingModal";
 import album1 from "@/assets/album-1.jpg";
 import album2 from "@/assets/album-2.jpg";
 import album3 from "@/assets/album-3.jpg";
@@ -73,6 +74,7 @@ function BrandMark() {
 function SpotifyHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [calOpen, setCalOpen] = useState(false);
 
   const filteredTracks = tracks.filter((track) =>
     `${track.title} ${track.artist}`.toLocaleLowerCase("pt").includes(query.toLocaleLowerCase("pt")),
@@ -113,6 +115,7 @@ function SpotifyHome() {
           <span className="mx-2 h-6 w-px bg-border" />
           <a href="#instalar" className="flex items-center gap-1.5 hover:text-foreground"><CircleArrowDown /> Instalar app</a>
           <a href="#registo" className="ml-2 hover:text-foreground">Regista-te</a>
+          <Button onClick={() => setCalOpen(true)} variant="secondary" className="h-12 rounded-full px-6 font-bold">Agendar reunião</Button>
           <Button className="h-12 rounded-full bg-foreground px-7 font-bold text-background hover:bg-foreground/90">Iniciar sessão</Button>
         </nav>
 
@@ -124,6 +127,7 @@ function SpotifyHome() {
       {menuOpen && (
         <nav className="absolute right-3 top-14 z-50 flex w-60 flex-col gap-1 rounded-md border border-border bg-popover p-2 text-sm font-bold shadow-xl lg:hidden">
           {["Premium", "Apoio", "Transferir", "Instalar app", "Regista-te"].map((item) => <a key={item} href={`#${item.toLowerCase().replace(" ", "-")}`} className="rounded px-3 py-3 hover:bg-secondary">{item}</a>)}
+          <Button onClick={() => { setMenuOpen(false); setCalOpen(true); }} variant="secondary" className="rounded-full font-bold">Agendar reunião</Button>
           <Button className="mt-1 rounded-full bg-foreground text-background hover:bg-foreground/90">Iniciar sessão</Button>
         </nav>
       )}
@@ -215,6 +219,8 @@ function SpotifyHome() {
           <button type="button" aria-label="Voltar" className="absolute left-3 top-1/2 hidden size-10 -translate-y-1/2 place-items-center rounded-full bg-background/80 text-muted-foreground shadow-xl hover:text-foreground xl:grid"><ChevronLeft /></button>
         </main>
       </div>
+
+      <CalBookingModal open={calOpen} onClose={() => setCalOpen(false)} />
     </div>
   );
 }
