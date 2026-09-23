@@ -175,9 +175,9 @@ export default function ListenfyChat({ onScheduleDemo }: ListenfyChatProps) {
 
           <div className="border-t border-border p-3">
             <PromptInput
-              onSubmit={(event) => {
+              onSubmit={(message, event) => {
                 event.preventDefault();
-                ask(input);
+                ask(message.text ?? input);
               }}
             >
               <PromptInputTextarea

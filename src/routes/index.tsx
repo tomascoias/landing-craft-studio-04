@@ -15,6 +15,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import CalBookingModal from "@/components/CalBookingModal";
+import ListenfyChat from "@/components/chat/ListenfyChat";
 import album1 from "@/assets/album-1.jpg";
 import album2 from "@/assets/album-2.jpg";
 import album3 from "@/assets/album-3.jpg";
@@ -221,6 +222,7 @@ function SpotifyHome() {
       </div>
 
       <CalBookingModal open={calOpen} onClose={() => setCalOpen(false)} />
+      <ListenfyChat onScheduleDemo={() => setCalOpen(true)} />
     </div>
   );
 }
