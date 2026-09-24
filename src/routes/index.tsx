@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import CalBookingModal from "@/components/CalBookingModal";
 import ListenfyChat from "@/components/chat/ListenfyChat";
+import FaqSection from "@/components/landing/FaqSection";
 import album1 from "@/assets/album-1.jpg";
 import album2 from "@/assets/album-2.jpg";
 import album3 from "@/assets/album-3.jpg";
@@ -210,6 +211,8 @@ function SpotifyHome() {
               ))}
             </div>
           </section>
+
+          <FaqSection />
 
           <footer className="mx-5 mt-10 flex flex-col justify-between gap-8 border-t border-border px-2 py-8 text-sm text-muted-foreground sm:mx-8 sm:flex-row lg:mx-12">
             <span>© 2026 Spotify AB</span>
