@@ -1,6 +1,6 @@
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
-import { CalendarDays, MessageCircle, Music4, X } from "lucide-react";
+import { MessageCircle, Music4, X } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Conversation,
@@ -27,14 +27,14 @@ export function askListenfyAI(question: string) {
 }
 
 const QUICK_ACTIONS = [
-  { label: "❓ How does Listenfy work?", prompt: "How does Listenfy work?" },
-  { label: "🎵 Recommend me some music", prompt: "Recommend me some music based on my preferences." },
-  { label: "🎧 Create a playlist", prompt: "Create a playlist idea for me." },
-  { label: "🔎 Explore an artist", prompt: "Help me explore an artist I might like." },
+  { label: "❓ Como funciona o Listenfy?", prompt: "Como funciona o Listenfy?" },
+  { label: "🎵 Recomenda-me música", prompt: "Recomenda-me música." },
+  { label: "🎧 Cria uma playlist", prompt: "Cria uma playlist para mim." },
+  { label: "🔎 Explorar um artista", prompt: "Ajuda-me a explorar um artista de que eu possa gostar." },
 ];
 
 const GREETING =
-  "Hey! 👋 I'm Listenfy AI.\n\nI can help you discover music, explore artists and albums, create playlist ideas, or answer questions about Listenfy.\n\nWhat would you like to do?";
+  "Olá! 👋 Sou o Listenfy AI.\n\nPosso ajudar-te a descobrir música, explorar artistas e álbuns, criar ideias para playlists ou responder a perguntas sobre o Listenfy.\n\nO que gostarias de fazer?";
 
 type ListenfyChatProps = {
   onScheduleDemo: () => void;
@@ -98,7 +98,7 @@ export default function ListenfyChat({ onScheduleDemo }: ListenfyChatProps) {
             </span>
             <div className="min-w-0 flex-1">
               <h2 className="truncate text-sm font-bold">Listenfy AI</h2>
-              <p className="truncate text-xs text-muted-foreground">Your personal music assistant</p>
+              <p className="truncate text-xs text-muted-foreground">O teu assistente musical</p>
             </div>
             <button
               type="button"
@@ -153,7 +153,7 @@ export default function ListenfyChat({ onScheduleDemo }: ListenfyChatProps) {
                         onClick={onScheduleDemo}
                         className="w-fit rounded-full bg-primary px-4 font-bold text-primary-foreground hover:bg-primary/90"
                       >
-                        <CalendarDays /> Schedule a demo
+                        📅 Agendar demonstração
                       </Button>
                     )}
                   </div>
@@ -161,12 +161,12 @@ export default function ListenfyChat({ onScheduleDemo }: ListenfyChatProps) {
               })}
 
               {status === "submitted" && (
-                <Shimmer className="pl-1 text-xs">Listenfy AI is typing…</Shimmer>
+                <Shimmer className="pl-1 text-xs">O Listenfy AI está a escrever…</Shimmer>
               )}
 
               {error && (
                 <p className="rounded-md bg-secondary px-3 py-2 text-xs text-muted-foreground">
-                  Sorry, I couldn&apos;t process that request right now. Please try again.
+                  Desculpa, não consegui processar o teu pedido agora. Tenta novamente.
                 </p>
               )}
             </ConversationContent>
@@ -184,7 +184,8 @@ export default function ListenfyChat({ onScheduleDemo }: ListenfyChatProps) {
                 ref={textareaRef}
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
-                placeholder="Ask me about music or Listenfy..."
+                placeholder="Pergunta-me sobre música ou sobre o Listenfy..."
+                aria-label="Mensagem para o Listenfy AI"
               />
               <PromptInputFooter className="justify-end">
                 <PromptInputSubmit status={status} disabled={!input.trim() || busy} />
