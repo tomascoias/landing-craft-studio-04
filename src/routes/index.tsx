@@ -27,15 +27,15 @@ import album6 from "@/assets/album-6.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Spotify — Web Player: música para todos" },
+      { title: "Listenfy — Web Player: música para todos" },
       {
         name: "description",
-        content: "Ouve música, artistas e podcasts populares no Spotify Web Player.",
+        content: "Ouve música, artistas e podcasts populares no Listenfy Web Player.",
       },
-      { property: "og:title", content: "Spotify — Web Player: música para todos" },
+      { property: "og:title", content: "Listenfy — Web Player: música para todos" },
       {
         property: "og:description",
-        content: "Ouve música, artistas e podcasts populares no Spotify Web Player.",
+        content: "Ouve música, artistas e podcasts populares no Listenfy Web Player.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -64,11 +64,11 @@ const artists = [
 
 function BrandMark() {
   return (
-    <a href="#inicio" aria-label="Spotify" className="flex shrink-0 items-center gap-2 text-foreground">
+    <a href="#inicio" aria-label="Listenfy" className="flex shrink-0 items-center gap-2 text-foreground">
       <span className="grid size-10 place-items-center rounded-full bg-foreground text-background">
         <span className="spotify-waves" aria-hidden="true"><i /><i /><i /></span>
       </span>
-      <span className="hidden text-xl font-bold xl:inline">Spotify</span>
+      <span className="hidden text-xl font-bold xl:inline">Listenfy</span>
     </a>
   );
 }
@@ -215,7 +215,7 @@ function SpotifyHome() {
           <FaqSection />
 
           <footer className="mx-5 mt-10 flex flex-col justify-between gap-8 border-t border-border px-2 py-8 text-sm text-muted-foreground sm:mx-8 sm:flex-row lg:mx-12">
-            <span>© 2026 Spotify AB</span>
+            <span>© 2026 Listenfy</span>
             <div className="flex flex-wrap gap-5"><a href="#legal" className="hover:text-foreground">Legal</a><a href="#privacidade" className="hover:text-foreground">Privacidade</a><a href="#cookies" className="hover:text-foreground">Cookies</a></div>
           </footer>
 

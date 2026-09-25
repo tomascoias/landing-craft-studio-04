@@ -77,18 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Spotify — Web Player: música para todos" },
+      { title: "Listenfy — Web Player: música para todos" },
       {
         name: "description",
         content:
-          "Ouve música, artistas e podcasts populares no Spotify Web Player.",
+          "Ouve música, artistas e podcasts populares no Listenfy Web Player.",
       },
-      { name: "author", content: "Spotify" },
-      { property: "og:title", content: "Spotify — Web Player: música para todos" },
+      { name: "author", content: "Listenfy" },
+      { property: "og:title", content: "Listenfy — Web Player: música para todos" },
       {
         property: "og:description",
         content:
-          "Ouve música, artistas e podcasts populares no Spotify Web Player.",
+          "Ouve música, artistas e podcasts populares no Listenfy Web Player.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
