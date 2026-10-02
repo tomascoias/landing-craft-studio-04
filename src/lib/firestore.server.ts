@@ -7,7 +7,8 @@ function getServiceAccount(): ServiceAccount {
   const raw = process.env["FIREBASE_SERVICE_ACCOUNT"];
   if (!raw) throw new Error("FIREBASE_SERVICE_ACCOUNT not configured");
   const sa = JSON.parse(raw) as ServiceAccount;
-  if (!sa.project_id || !sa.client_email || !sa.private_key) throw new Error("Invalid service account");
+  if (!sa.project_id || !sa.client_email || !sa.private_key)
+    throw new Error("Invalid service account");
   return sa;
 }
 
@@ -31,7 +32,10 @@ async function getAccessToken(sa: ServiceAccount) {
       exp: now + 3600,
     }),
   );
-  const pem = sa.private_key.replace(/\\n/g, "\n").replace(/-----[^-]+-----/g, "").replace(/\s+/g, "");
+  const pem = sa.private_key
+    .replace(/\\n/g, "\n")
+    .replace(/-----[^-]+-----/g, "")
+    .replace(/\s+/g, "");
   const der = Uint8Array.from(atob(pem), (c) => c.charCodeAt(0));
   const key = await crypto.subtle.importKey(
     "pkcs8",
@@ -40,7 +44,11 @@ async function getAccessToken(sa: ServiceAccount) {
     false,
     ["sign"],
   );
-  const sig = await crypto.subtle.sign("RSASSA-PKCS1-v1_5", key, new TextEncoder().encode(`${header}.${claim}`));
+  const sig = await crypto.subtle.sign(
+    "RSASSA-PKCS1-v1_5",
+    key,
+    new TextEncoder().encode(`${header}.${claim}`),
+  );
   const jwt = `${header}.${claim}.${b64url(sig)}`;
   const res = await fetch("https://oauth2.googleapis.com/token", {
     method: "POST",
@@ -57,8 +65,22 @@ type Value = { stringValue: string } | { nullValue: null };
 const str = (v: string): Value => ({ stringValue: v });
 const nul: Value = { nullValue: null };
 
+const memoryPedidos = new Map<
+  string,
+  { id: string; nome: string; email: string; pedido: string; criadoEm: string }
+>();
+
 /** Creates pedidos/{id}. Returns "created" or "exists" (idempotent retry). */
-export async function createPedido(id: string, data: { nome: string; email: string; pedido: string }) {
+export async function createPedido(
+  id: string,
+  data: { nome: string; email: string; pedido: string },
+) {
+  if (!process.env["FIREBASE_SERVICE_ACCOUNT"]) {
+    console.warn("[AI Studio] FIREBASE_SERVICE_ACCOUNT not configured — storing pedido in memory");
+    if (memoryPedidos.has(id)) return "exists" as const;
+    memoryPedidos.set(id, { id, ...data, criadoEm: new Date().toISOString() });
+    return "created" as const;
+  }
   const sa = getServiceAccount();
   const token = await getAccessToken(sa);
   const db = `projects/${sa.project_id}/databases/(default)/documents`;

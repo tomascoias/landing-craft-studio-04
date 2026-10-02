@@ -2,9 +2,7 @@ import { getCalApi } from "@calcom/embed-react";
 import { X } from "lucide-react";
 import { Suspense, lazy, useEffect } from "react";
 
-const Cal = lazy(() =>
-  import("@calcom/embed-react").then((mod) => ({ default: mod.default })),
-);
+const Cal = lazy(() => import("@calcom/embed-react").then((mod) => ({ default: mod.default })));
 
 type CalBookingModalProps = {
   open: boolean;

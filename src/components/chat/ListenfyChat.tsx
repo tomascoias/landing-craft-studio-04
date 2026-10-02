@@ -30,7 +30,10 @@ const QUICK_ACTIONS = [
   { label: "❓ Como funciona o Listenfy?", prompt: "Como funciona o Listenfy?" },
   { label: "🎵 Recomenda-me música", prompt: "Recomenda-me música." },
   { label: "🎧 Cria uma playlist", prompt: "Cria uma playlist para mim." },
-  { label: "🔎 Explorar um artista", prompt: "Ajuda-me a explorar um artista de que eu possa gostar." },
+  {
+    label: "🔎 Explorar um artista",
+    prompt: "Ajuda-me a explorar um artista de que eu possa gostar.",
+  },
 ];
 
 const GREETING =

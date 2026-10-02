@@ -1,11 +1,18 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { askListenfyAI } from "@/components/chat/ListenfyChat";
 import { LISTENFY_FAQ } from "@/lib/listenfy-knowledge";
 
 export default function FaqSection() {
   return (
     <section id="faq" aria-labelledby="faq-title" className="px-5 py-7 sm:px-8 lg:px-12">
-      <h2 id="faq-title" className="text-2xl font-bold sm:text-3xl">Perguntas Frequentes</h2>
+      <h2 id="faq-title" className="text-2xl font-bold sm:text-3xl">
+        Perguntas Frequentes
+      </h2>
       <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
         Tens dúvidas sobre o Listenfy? Encontra aqui as respostas às perguntas mais frequentes.
       </p>

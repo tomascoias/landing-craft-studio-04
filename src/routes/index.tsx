@@ -46,12 +46,22 @@ export const Route = createFileRoute("/")({
 });
 
 const tracks = [
-  { image: album1, title: "Puxa o Lança", artist: "MC Jvila, KayBlack, Veigh, Vulgo FK", explicit: true },
+  {
+    image: album1,
+    title: "Puxa o Lança",
+    artist: "MC Jvila, KayBlack, Veigh, Vulgo FK",
+    explicit: true,
+  },
   { image: album2, title: "BbY WOW", artist: "KAROL G, Judeline, rusowsky" },
   { image: album3, title: "Nicole Kidman", artist: "ADÉLA", explicit: true },
   { image: album4, title: "Alcatraz", artist: "Plutonio" },
   { image: album5, title: "Escola é linda", artist: "VM e XOODÓ", explicit: true },
-  { image: album6, title: "Nos vai ficar, sem se sufocar", artist: "Mc Lele JP, DJ Andrabbeat", explicit: true },
+  {
+    image: album6,
+    title: "Nos vai ficar, sem se sufocar",
+    artist: "Mc Lele JP, DJ Andrabbeat",
+    explicit: true,
+  },
 ];
 
 const artists = [
@@ -65,9 +75,17 @@ const artists = [
 
 function BrandMark() {
   return (
-    <a href="#inicio" aria-label="Listenfy" className="flex shrink-0 items-center gap-2 text-foreground">
+    <a
+      href="#inicio"
+      aria-label="Listenfy"
+      className="flex shrink-0 items-center gap-2 text-foreground"
+    >
       <span className="grid size-10 place-items-center rounded-full bg-foreground text-background">
-        <span className="spotify-waves" aria-hidden="true"><i /><i /><i /></span>
+        <span className="spotify-waves" aria-hidden="true">
+          <i />
+          <i />
+          <i />
+        </span>
       </span>
       <span className="hidden text-xl font-bold xl:inline">Listenfy</span>
     </a>
@@ -80,7 +98,9 @@ function SpotifyHome() {
   const [calOpen, setCalOpen] = useState(false);
 
   const filteredTracks = tracks.filter((track) =>
-    `${track.title} ${track.artist}`.toLocaleLowerCase("pt").includes(query.toLocaleLowerCase("pt")),
+    `${track.title} ${track.artist}`
+      .toLocaleLowerCase("pt")
+      .includes(query.toLocaleLowerCase("pt")),
   );
 
   return (
@@ -89,7 +109,13 @@ function SpotifyHome() {
         <BrandMark />
 
         <div className="mx-auto flex min-w-0 flex-1 items-center justify-center gap-2 xl:max-w-2xl">
-          <Button aria-label="Início" title="Início" variant="secondary" size="icon" className="size-12 shrink-0 rounded-full">
+          <Button
+            aria-label="Início"
+            title="Início"
+            variant="secondary"
+            size="icon"
+            className="size-12 shrink-0 rounded-full"
+          >
             <Home className="size-6" />
           </Button>
           <label className="group relative w-full max-w-xl">
@@ -102,7 +128,14 @@ function SpotifyHome() {
               className="h-12 rounded-full border-transparent bg-secondary pl-12 pr-12 text-base shadow-none hover:bg-surface-raised focus-visible:ring-2"
             />
             {query ? (
-              <Button type="button" onClick={() => setQuery("")} aria-label="Limpar pesquisa" variant="ghost" size="icon" className="absolute right-1.5 top-1/2 size-9 -translate-y-1/2 rounded-full">
+              <Button
+                type="button"
+                onClick={() => setQuery("")}
+                aria-label="Limpar pesquisa"
+                variant="ghost"
+                size="icon"
+                className="absolute right-1.5 top-1/2 size-9 -translate-y-1/2 rounded-full"
+              >
                 <X />
               </Button>
             ) : (
@@ -112,52 +145,122 @@ function SpotifyHome() {
         </div>
 
         <nav className="hidden shrink-0 items-center gap-3 text-sm font-bold text-muted-foreground lg:flex">
-          <a href="#premium" className="hover:text-foreground">Premium</a>
-          <a href="#apoio" className="hover:text-foreground">Apoio</a>
-          <a href="#transferir" className="hover:text-foreground">Transferir</a>
+          <a href="#premium" className="hover:text-foreground">
+            Premium
+          </a>
+          <a href="#apoio" className="hover:text-foreground">
+            Apoio
+          </a>
+          <a href="#transferir" className="hover:text-foreground">
+            Transferir
+          </a>
           <span className="mx-2 h-6 w-px bg-border" />
-          <a href="#instalar" className="flex items-center gap-1.5 hover:text-foreground"><CircleArrowDown /> Instalar app</a>
-          <a href="#registo" className="ml-2 hover:text-foreground">Regista-te</a>
-          <Button onClick={() => setCalOpen(true)} variant="secondary" className="h-12 rounded-full px-6 font-bold">Agendar reunião</Button>
-          <Button className="h-12 rounded-full bg-foreground px-7 font-bold text-background hover:bg-foreground/90">Iniciar sessão</Button>
+          <a href="#instalar" className="flex items-center gap-1.5 hover:text-foreground">
+            <CircleArrowDown /> Instalar app
+          </a>
+          <a href="#registo" className="ml-2 hover:text-foreground">
+            Regista-te
+          </a>
+          <Button
+            onClick={() => setCalOpen(true)}
+            variant="secondary"
+            className="h-12 rounded-full px-6 font-bold"
+          >
+            Agendar reunião
+          </Button>
+          <Button className="h-12 rounded-full bg-foreground px-7 font-bold text-background hover:bg-foreground/90">
+            Iniciar sessão
+          </Button>
         </nav>
 
-        <Button onClick={() => setMenuOpen((open) => !open)} aria-label="Abrir menu" variant="ghost" size="icon" className="shrink-0 rounded-full lg:hidden">
+        <Button
+          onClick={() => setMenuOpen((open) => !open)}
+          aria-label="Abrir menu"
+          variant="ghost"
+          size="icon"
+          className="shrink-0 rounded-full lg:hidden"
+        >
           {menuOpen ? <X /> : <Menu />}
         </Button>
       </header>
 
       {menuOpen && (
         <nav className="absolute right-3 top-14 z-50 flex w-60 flex-col gap-1 rounded-md border border-border bg-popover p-2 text-sm font-bold shadow-xl lg:hidden">
-          {["Premium", "Apoio", "Transferir", "Instalar app", "Regista-te"].map((item) => <a key={item} href={`#${item.toLowerCase().replace(" ", "-")}`} className="rounded px-3 py-3 hover:bg-secondary">{item}</a>)}
-          <Button onClick={() => { setMenuOpen(false); setCalOpen(true); }} variant="secondary" className="rounded-full font-bold">Agendar reunião</Button>
-          <Button className="mt-1 rounded-full bg-foreground text-background hover:bg-foreground/90">Iniciar sessão</Button>
+          {["Premium", "Apoio", "Transferir", "Instalar app", "Regista-te"].map((item) => (
+            <a
+              key={item}
+              href={`#${item.toLowerCase().replace(" ", "-")}`}
+              className="rounded px-3 py-3 hover:bg-secondary"
+            >
+              {item}
+            </a>
+          ))}
+          <Button
+            onClick={() => {
+              setMenuOpen(false);
+              setCalOpen(true);
+            }}
+            variant="secondary"
+            className="rounded-full font-bold"
+          >
+            Agendar reunião
+          </Button>
+          <Button className="mt-1 rounded-full bg-foreground text-background hover:bg-foreground/90">
+            Iniciar sessão
+          </Button>
         </nav>
       )}
 
       <div className="grid h-[calc(100dvh-4rem)] grid-cols-1 gap-2 px-2 pb-2 md:grid-cols-[320px_minmax(0,1fr)] lg:grid-cols-[420px_minmax(0,1fr)]">
         <aside className="hidden min-h-0 flex-col overflow-hidden rounded-md bg-sidebar md:flex">
           <div className="flex items-center justify-between px-6 py-5">
-            <div className="flex items-center gap-3 font-bold"><Library className="size-5" /> A tua Biblioteca</div>
-            <Button variant="secondary" className="rounded-full font-bold"><Plus /> Criar</Button>
+            <div className="flex items-center gap-3 font-bold">
+              <Library className="size-5" /> A tua Biblioteca
+            </div>
+            <Button variant="secondary" className="rounded-full font-bold">
+              <Plus /> Criar
+            </Button>
           </div>
           <div className="library-scroll mt-6 flex min-h-0 flex-1 flex-col overflow-y-auto px-2">
             <div className="rounded-md bg-secondary p-5">
               <h2 className="font-bold">Cria a tua primeira playlist</h2>
               <p className="mt-2 text-sm font-medium">É fácil, nós ajudamos</p>
-              <Button className="mt-5 rounded-full bg-foreground px-5 font-bold text-background hover:bg-foreground/90">Criar playlist</Button>
+              <Button className="mt-5 rounded-full bg-foreground px-5 font-bold text-background hover:bg-foreground/90">
+                Criar playlist
+              </Button>
             </div>
             <div className="mt-6 rounded-md bg-secondary p-5">
-              <h2 className="max-w-[28ch] font-bold">Vamos lá encontrar alguns podcasts para seguires</h2>
-              <p className="mt-2 text-sm font-medium">Vamos atualizar-te sobre os novos episódios</p>
-              <Button className="mt-5 rounded-full bg-foreground px-5 font-bold text-background hover:bg-foreground/90">Explorar podcasts</Button>
+              <h2 className="max-w-[28ch] font-bold">
+                Vamos lá encontrar alguns podcasts para seguires
+              </h2>
+              <p className="mt-2 text-sm font-medium">
+                Vamos atualizar-te sobre os novos episódios
+              </p>
+              <Button className="mt-5 rounded-full bg-foreground px-5 font-bold text-background hover:bg-foreground/90">
+                Explorar podcasts
+              </Button>
             </div>
             <div className="mt-auto px-5 pb-6 pt-10">
               <div className="flex flex-wrap gap-x-5 gap-y-3 text-xs text-muted-foreground">
-                {['Termos Legais','Centro de Segurança e Privacidade','Política de Privacidade','Definições de cookies','Acerca dos anúncios','Acessibilidade'].map((link) => <a href="#legal" key={link} className="hover:underline">{link}</a>)}
-                <a href="#cookies" className="font-semibold text-foreground hover:underline">Cookies</a>
+                {[
+                  "Termos Legais",
+                  "Centro de Segurança e Privacidade",
+                  "Política de Privacidade",
+                  "Definições de cookies",
+                  "Acerca dos anúncios",
+                  "Acessibilidade",
+                ].map((link) => (
+                  <a href="#legal" key={link} className="hover:underline">
+                    {link}
+                  </a>
+                ))}
+                <a href="#cookies" className="font-semibold text-foreground hover:underline">
+                  Cookies
+                </a>
               </div>
-              <Button variant="outline" className="mt-8 rounded-full bg-transparent font-bold"><Globe /> Português</Button>
+              <Button variant="outline" className="mt-8 rounded-full bg-transparent font-bold">
+                <Globe /> Português
+              </Button>
             </div>
           </div>
         </aside>
@@ -166,7 +269,12 @@ function SpotifyHome() {
           <section className="px-5 pb-8 pt-7 sm:px-8 lg:px-12">
             <div className="flex items-end justify-between gap-4">
               <h1 className="text-2xl font-bold sm:text-3xl">Músicas populares</h1>
-              <button type="button" className="text-sm font-bold text-muted-foreground hover:underline">Mostrar tudo</button>
+              <button
+                type="button"
+                className="text-sm font-bold text-muted-foreground hover:underline"
+              >
+                Mostrar tudo
+              </button>
             </div>
 
             {filteredTracks.length ? (
@@ -174,35 +282,62 @@ function SpotifyHome() {
                 {filteredTracks.map((track) => (
                   <article key={track.title} className="group min-w-0 cursor-pointer">
                     <div className="relative aspect-square overflow-hidden rounded-md bg-secondary shadow-lg">
-                      <img src={track.image} alt={`Capa de ${track.title}`} className="size-full object-cover transition-transform duration-300 group-hover:scale-[1.03]" />
-                      <Button aria-label={`Reproduzir ${track.title}`} size="icon" className="absolute bottom-2 right-2 size-12 translate-y-3 rounded-full bg-primary text-primary-foreground opacity-0 shadow-xl transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                      <img
+                        src={track.image}
+                        alt={`Capa de ${track.title}`}
+                        className="size-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                      />
+                      <Button
+                        aria-label={`Reproduzir ${track.title}`}
+                        size="icon"
+                        className="absolute bottom-2 right-2 size-12 translate-y-3 rounded-full bg-primary text-primary-foreground opacity-0 shadow-xl transition-all group-hover:translate-y-0 group-hover:opacity-100"
+                      >
                         <span className="ml-0.5 text-lg">▶</span>
                       </Button>
                     </div>
                     <h2 className="mt-3 truncate font-semibold">{track.title}</h2>
                     <p className="mt-1 line-clamp-2 text-sm leading-5 text-muted-foreground">
-                      {track.explicit && <span className="mr-1.5 rounded-sm bg-muted-foreground px-1 text-[10px] font-bold text-background">E</span>}
+                      {track.explicit && (
+                        <span className="mr-1.5 rounded-sm bg-muted-foreground px-1 text-[10px] font-bold text-background">
+                          E
+                        </span>
+                      )}
                       {track.artist}
                     </p>
                   </article>
                 ))}
               </div>
             ) : (
-              <div className="grid min-h-52 place-items-center text-center text-muted-foreground">Não encontrámos resultados para “{query}”.</div>
+              <div className="grid min-h-52 place-items-center text-center text-muted-foreground">
+                Não encontrámos resultados para “{query}”.
+              </div>
             )}
           </section>
 
           <section className="px-5 py-7 sm:px-8 lg:px-12">
             <div className="flex items-end justify-between gap-4">
               <h2 className="text-2xl font-bold sm:text-3xl">Artistas populares</h2>
-              <button type="button" className="text-sm font-bold text-muted-foreground hover:underline">Mostrar tudo</button>
+              <button
+                type="button"
+                className="text-sm font-bold text-muted-foreground hover:underline"
+              >
+                Mostrar tudo
+              </button>
             </div>
             <div className="mt-5 grid grid-cols-2 gap-x-4 gap-y-7 sm:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-6">
               {artists.map((artist) => (
                 <article key={artist.name} className="group min-w-0 cursor-pointer">
                   <div className="relative aspect-square overflow-hidden rounded-full bg-secondary shadow-lg">
-                    <img src={artist.image} alt={artist.name} className={`size-full object-cover ${artist.position} transition-transform duration-300 group-hover:scale-[1.03]`} />
-                    <Button aria-label={`Reproduzir ${artist.name}`} size="icon" className="absolute bottom-3 right-3 size-12 translate-y-3 rounded-full bg-primary text-primary-foreground opacity-0 shadow-xl transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                    <img
+                      src={artist.image}
+                      alt={artist.name}
+                      className={`size-full object-cover ${artist.position} transition-transform duration-300 group-hover:scale-[1.03]`}
+                    />
+                    <Button
+                      aria-label={`Reproduzir ${artist.name}`}
+                      size="icon"
+                      className="absolute bottom-3 right-3 size-12 translate-y-3 rounded-full bg-primary text-primary-foreground opacity-0 shadow-xl transition-all group-hover:translate-y-0 group-hover:opacity-100"
+                    >
                       <span className="ml-0.5 text-lg">▶</span>
                     </Button>
                   </div>
@@ -219,11 +354,33 @@ function SpotifyHome() {
 
           <footer className="mx-5 mt-10 flex flex-col justify-between gap-8 border-t border-border px-2 py-8 text-sm text-muted-foreground sm:mx-8 sm:flex-row lg:mx-12">
             <span>© 2026 Listenfy</span>
-            <div className="flex flex-wrap gap-5"><a href="#legal" className="hover:text-foreground">Legal</a><a href="#privacidade" className="hover:text-foreground">Privacidade</a><a href="#cookies" className="hover:text-foreground">Cookies</a></div>
+            <div className="flex flex-wrap gap-5">
+              <a href="#legal" className="hover:text-foreground">
+                Legal
+              </a>
+              <a href="#privacidade" className="hover:text-foreground">
+                Privacidade
+              </a>
+              <a href="#cookies" className="hover:text-foreground">
+                Cookies
+              </a>
+            </div>
           </footer>
 
-          <button type="button" aria-label="Ver mais" className="absolute right-3 top-1/2 hidden size-10 -translate-y-1/2 place-items-center rounded-full bg-background/80 text-muted-foreground shadow-xl hover:text-foreground xl:grid"><ChevronRight /></button>
-          <button type="button" aria-label="Voltar" className="absolute left-3 top-1/2 hidden size-10 -translate-y-1/2 place-items-center rounded-full bg-background/80 text-muted-foreground shadow-xl hover:text-foreground xl:grid"><ChevronLeft /></button>
+          <button
+            type="button"
+            aria-label="Ver mais"
+            className="absolute right-3 top-1/2 hidden size-10 -translate-y-1/2 place-items-center rounded-full bg-background/80 text-muted-foreground shadow-xl hover:text-foreground xl:grid"
+          >
+            <ChevronRight />
+          </button>
+          <button
+            type="button"
+            aria-label="Voltar"
+            className="absolute left-3 top-1/2 hidden size-10 -translate-y-1/2 place-items-center rounded-full bg-background/80 text-muted-foreground shadow-xl hover:text-foreground xl:grid"
+          >
+            <ChevronLeft />
+          </button>
         </main>
       </div>
 
