@@ -86,8 +86,8 @@ export async function createPedido(id: string, data: { nome: string; email: stri
           },
           currentDocument: { exists: false },
           updateTransforms: [
-            { fieldPath: "createdAt", setToServerValue: "REQUEST_TIME" },
-            { fieldPath: "updatedAt", setToServerValue: "REQUEST_TIME" },
+            { fieldPath: "criadoEm", setToServerValue: "REQUEST_TIME" },
+            { fieldPath: "atualizadoEm", setToServerValue: "REQUEST_TIME" },
           ],
         },
       ],
